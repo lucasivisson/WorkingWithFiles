@@ -54,6 +54,67 @@ public class Arquivos {
         return eIgual;
     }
     
+    public void criarRespostas() {
+        Scanner materiaIn = new Scanner(System.in);
+        Scanner alunoIn = new Scanner(System.in);
+        Scanner respostasIn = new Scanner(System.in);
+        Scanner outroAluno = new Scanner(System.in);
+        Scanner outraMateria = new Scanner(System.in);
+
+        Integer novoAluno = null;
+        Integer novaMateria = null;
+
+        try {
+            do {
+                System.out.println("Digite o nome da matéria: ");
+                String materia = materiaIn.next();
+
+                File arquivo = new File(diretorioProva, materia + ".txt");
+
+                FileWriter escreverArquivo = new FileWriter(arquivo, true);
+                BufferedWriter bw = new BufferedWriter(escreverArquivo);
+
+                do {
+                    System.out.println("Digite o nome do aluno: ");
+                    String nome = alunoIn.nextLine();
+
+                    for(int i = 0; i < 10; i++) {
+                        System.out.println("Digite os V ou F:");
+                        String respostas = respostasIn.next();
+
+                        if(respostas.equals("V") || respostas.equals("F") || respostas.equals("v") || respostas.equals("f")) {
+                            bw.write(respostas);
+                        } else {
+                            System.out.println("Resposta inválida, responda apenas V ou F");
+                        }
+                    }
+                    bw.write("  " + nome);
+
+                    System.out.println("Deseja cadastrar as respostas de outro aluno?");
+                    System.out.println("1: SIM / 2: NÃO");
+                    novoAluno = outroAluno.nextInt();
+
+                    bw.newLine();
+
+                } while (novoAluno == 1);
+
+                bw.close();
+                escreverArquivo.close();
+
+                System.out.println("Deseja cadastrar outra matéria?");
+                System.out.println("1: SIM / 2: NÃO");
+                novaMateria = outraMateria.nextInt();
+
+            } while (novaMateria == 1);
+
+        }  catch (FileNotFoundException e){
+            e.printStackTrace();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
     public void criarGabaritoDeRespostas(String disciplinaEscolhida){
         try{
         Scanner teclado = new Scanner(System.in);
