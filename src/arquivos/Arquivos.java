@@ -63,6 +63,8 @@ public class Arquivos {
 
         Integer novoAluno = null;
         Integer novaMateria = null;
+        
+        Integer i = 0;
 
         try {
             do {
@@ -78,12 +80,12 @@ public class Arquivos {
                     System.out.println("Digite o nome do aluno: ");
                     String nome = alunoIn.nextLine();
 
-                    for(int i = 0; i < 10; i++) {
+                    while(i < 10){
                         System.out.println("Digite os V ou F:");
                         String respostas = respostasIn.next();
-
-                        if(respostas.equals("V") || respostas.equals("F") || respostas.equals("v") || respostas.equals("f")) {
+                        if(respostas.equals("V") || respostas.equals("F") || respostas.equals("v") || respostas.equals("f")){
                             bw.write(respostas);
+                            i++;
                         } else {
                             System.out.println("Resposta inválida, responda apenas V ou F");
                         }
