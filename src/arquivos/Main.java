@@ -16,6 +16,9 @@ public class Main {
         Integer novoAluno = null;
         Integer novaMateria = null;
         
+        File diretorio = new File("matérias");
+        diretorio.mkdir();
+        
         File diretorioProva = new File("matérias\\provas");
         diretorioProva.mkdir();
         

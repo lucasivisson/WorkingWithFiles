@@ -10,8 +10,12 @@ import java.util.Scanner;
 public class Arquivos {
     private File diretorioProva;
     private File diretorioGabarito;
+    private File diretorio;
     
     public Arquivos(){
+        this.diretorio = new File("matérias");
+        diretorio.mkdir();
+        
         this.diretorioProva = new File("matérias\\provas");
         diretorioProva.mkdir();
         
@@ -51,23 +55,32 @@ public class Arquivos {
     }
     
     public void criarGabaritoDeRespostas(String disciplinaEscolhida){
-        Scanner teclado = new Scanner(System.in);
         try{
+        Scanner teclado = new Scanner(System.in);
         File arquivo = new File(diretorioGabarito, disciplinaEscolhida + "Gabarito.txt");
         
         FileWriter escreverArquivo = new FileWriter(arquivo, true);
         BufferedWriter bw = new BufferedWriter(escreverArquivo);
         
         System.out.println("Crie o gabarito oficial da disciplina de " + disciplinaEscolhida );
-        for(int i = 0; i < 10; i++) {
+        int i = 0;
+        while(i < 10){
             System.out.println("Digite os V ou F:");
             String respostas = teclado.next();
-
-            bw.write(respostas);
+            if(respostas.equals("V") || respostas.equals("F") || respostas.equals("v") || respostas.equals("f")){
+                bw.write(respostas);
+                i++;
+            } else {
+                System.out.println("Resposta inválida, responda apenas V ou F");
+            }
         }
+            bw.close();
+            escreverArquivo.close();
+            
             System.out.println("Gabarito gerado com sucesso!");
             System.out.println("O gabarito está localizado no endereço: " + arquivo.getAbsolutePath());
         }  catch (FileNotFoundException e){
+            System.out.println("Erro: " + e);
             e.printStackTrace();
             
         } catch (IOException e) {
