@@ -6,15 +6,7 @@ import java.io.*;
 public class Main {
     
     public static void main(String[] args) {
-        Scanner materiaIn = new Scanner(System.in);
-        Scanner alunoIn = new Scanner(System.in);
-        Scanner respostasIn = new Scanner(System.in);
-        Scanner outroAluno = new Scanner(System.in);
-        Scanner outraMateria = new Scanner(System.in);
         Scanner escolhaMenu = new Scanner(System.in);
-
-        Integer novoAluno = null;
-        Integer novaMateria = null;
         
         File diretorio = new File("matérias");
         diretorio.mkdir();
@@ -36,51 +28,9 @@ public class Main {
         
         switch(escolha){
             case 1 :
-            try {
-                do {
-                    System.out.println("Digite o nome da matéria: ");
-                    String materia = materiaIn.next();
+                Arquivos aResp = new Arquivos();
 
-                    File arquivo = new File(diretorioProva, materia + ".txt");
-
-                    FileWriter escreverArquivo = new FileWriter(arquivo, true);
-                    BufferedWriter bw = new BufferedWriter(escreverArquivo);
-
-                    do {
-                        System.out.println("Digite o nome do aluno: ");
-                        String nome = alunoIn.nextLine();
-
-                        for(int i = 0; i < 10; i++) {
-                            System.out.println("Digite os V ou F:");
-                            String respostas = respostasIn.next();
-
-                            bw.write(respostas);
-                        }
-                        bw.write("  " + nome);
-
-                        System.out.println("Deseja cadastrar as respostas de outro aluno?");
-                        System.out.println("1: SIM / 2: NÃO");
-                        novoAluno = outroAluno.nextInt();
-
-                        bw.newLine();
-
-                    } while (novoAluno == 1);
-
-                    bw.close();
-                    escreverArquivo.close();
-
-                    System.out.println("Deseja cadastrar outra matéria?");
-                    System.out.println("1: SIM / 2: NÃO");
-                    novaMateria = outraMateria.nextInt();
-
-                } while (novaMateria == 1);
-
-            }  catch (FileNotFoundException e){
-            e.printStackTrace();
-            
-            } catch (IOException e) {
-            e.printStackTrace();
-            }
+                aResp.criarRespostas();
                 break;
                 
             case 2 :
