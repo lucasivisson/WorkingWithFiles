@@ -136,6 +136,8 @@ public class Arquivos {
                     }
                     bw.write("  " + nome);
 
+                    i = 0;
+                    
                     System.out.println("Deseja cadastrar as respostas de outro aluno?");
                     System.out.println("1: SIM / 2: NÃO");
                     novoAluno = outroAluno.nextInt();
@@ -238,7 +240,7 @@ public class Arquivos {
                     }
                 }
 
-                if (contadorDeV == 1 || contadorDeF == 10) {
+                if (contadorDeV == 10 || contadorDeF == 10) {
                     contadorDeQuestao = 0;
                 }
 
@@ -319,7 +321,7 @@ public class Arquivos {
                     }
                 }
 
-                if (contadorDeV == 1 || contadorDeF == 10) {
+                if (contadorDeV == 10 || contadorDeF == 10) {
                     contadorDeQuestao = 0;
                 }
 
