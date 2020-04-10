@@ -17,6 +17,8 @@ public class Main {
         File diretorioGabarito = new File("matérias\\gabaritos");
         diretorioGabarito.mkdir();
         
+        Arquivos a = new Arquivos();
+        
         int escolha;
         do{
         System.out.println("1 - Fazer a prova da disciplina");
@@ -28,15 +30,13 @@ public class Main {
         
         switch(escolha){
             case 1 :
-                Arquivos aResp = new Arquivos();
 
-                aResp.criarRespostas();
+                a.criarRespostas();
                 break;
                 
             case 2 :
                 System.out.println("Listas de todas as provas feitas pelos alunos.");
-                Arquivos a = new Arquivos();
-                a.visualizarArquivos(diretorioProva);
+                a.visualizarProvas();
                 
                 System.out.println("Digite o nome de uma disciplina para gerar o gabarito oficial:");
                 String disciplinaEscolhida = escolhaMenu.next();
@@ -47,6 +47,22 @@ public class Main {
                 }else{
                     System.out.println("Disciplina não encontrada!");
                 }
+                break;
+            
+            case 3:
+                System.out.println("Listas de todas os gabaritos feitos.");
+                a.visualizarGabaritos();
+                
+                System.out.println("Digite o nome do gabarito para gerar o boletim da disciplina:");
+                String gabaritoEscolhido = escolhaMenu.next();
+                boolean resultadoDaComp = a.compararGabarito(gabaritoEscolhido);
+                
+                if(resultadoDaComp == true){
+                    
+                } else {
+                    System.out.println("Impossível gerar boletim, gabarito não encontrado!");
+                }           
+                
                 break;
             
             default:

@@ -11,6 +11,7 @@ public class Arquivos {
     private File diretorioProva;
     private File diretorioGabarito;
     private File diretorio;
+    private File diretorioBoletimAlfabetico;
     
     public Arquivos(){
         this.diretorio = new File("matérias");
@@ -21,11 +22,27 @@ public class Arquivos {
         
         this.diretorioGabarito = new File("matérias\\gabaritos");
         diretorioGabarito.mkdir();
+        
+        this.diretorioBoletimAlfabetico = new File("matérias\\BoletimAlfabetico");
+        diretorioBoletimAlfabetico.mkdir();
     }
     
-    public void visualizarArquivos(File diretorio){
+    public void visualizarProvas(){
         try{
-            File afile[] = diretorio.listFiles();
+            File afile[] = diretorioProva.listFiles();
+            for(int i=0; i<afile.length; i++){
+                File arquivo = afile[i];
+                System.out.println("Nome do arquivo: " + arquivo.getName());
+            }
+        } catch(Exception e){
+            e.getMessage();
+            e.printStackTrace();
+        }
+    }
+    
+    public void visualizarGabaritos(){
+        try{
+            File afile[] = diretorioGabarito.listFiles();
             for(int i=0; i<afile.length; i++){
                 File arquivo = afile[i];
                 System.out.println("Nome do arquivo: " + arquivo.getName());
@@ -43,6 +60,24 @@ public class Arquivos {
             for(int i=0; i<afile.length; i++){
                 File arquivo = afile[i];
                 if(arquivo.getName().equals(disciplinaEscolhida + ".txt")){
+                    eIgual = true;
+                    return eIgual;
+                }
+            }
+        } catch(Exception e){
+            e.getMessage();
+            e.printStackTrace();
+        }
+        return eIgual;
+    }
+    
+    public boolean compararGabarito(String gabaritoEscolhido){
+        boolean eIgual = false;
+        try{
+            File afile[] = diretorioGabarito.listFiles();
+            for(int i=0; i<afile.length; i++){
+                File arquivo = afile[i];
+                if(arquivo.getName().equals(gabaritoEscolhido + ".txt")){
                     eIgual = true;
                     return eIgual;
                 }
@@ -149,5 +184,9 @@ public class Arquivos {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    
+    public void compararProvaGabarito(){
+        
     }
 }
