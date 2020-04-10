@@ -238,7 +238,7 @@ public class Arquivos {
                     }
                 }
 
-                if (contadorDeV == 1 || contadorDeF == 10) {
+                if (contadorDeV == 10 || contadorDeF == 10) {
                     contadorDeQuestao = 0;
                 }
 
@@ -319,7 +319,7 @@ public class Arquivos {
                     }
                 }
 
-                if (contadorDeV == 1 || contadorDeF == 10) {
+                if (contadorDeV == 10 || contadorDeF == 10) {
                     contadorDeQuestao = 0;
                 }
 
