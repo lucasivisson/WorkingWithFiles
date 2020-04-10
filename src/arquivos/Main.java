@@ -58,7 +58,7 @@ public class Main {
                 boolean resultadoDaComp = a.compararGabarito(gabaritoEscolhido);
                 
                 if(resultadoDaComp == true){
-                    
+                    a.compararProvaGabarito(gabaritoEscolhido);
                 } else {
                     System.out.println("Impossível gerar boletim, gabarito não encontrado!");
                 }           

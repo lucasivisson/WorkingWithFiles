@@ -1,10 +1,13 @@
 package arquivos;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.LineNumberReader;
 import java.util.Scanner;
 
 public class Arquivos {
@@ -155,7 +158,7 @@ public class Arquivos {
     public void criarGabaritoDeRespostas(String disciplinaEscolhida){
         try{
         Scanner teclado = new Scanner(System.in);
-        File arquivo = new File(diretorioGabarito, disciplinaEscolhida + "Gabarito.txt");
+        File arquivo = new File(diretorioGabarito, disciplinaEscolhida + ".txt");
         
         FileWriter escreverArquivo = new FileWriter(arquivo, true);
         BufferedWriter bw = new BufferedWriter(escreverArquivo);
@@ -186,7 +189,44 @@ public class Arquivos {
         }
     }
     
-    public void compararProvaGabarito(){
+    public void compararProvaGabarito(String gabaritoEscolhido){
+        String[] letraGabarito = null;
+        String[] letraProva = null;
+        int contadorDeQuestao = 0;
+        
+        try{
+            File arquivoGabarito = new File(diretorioGabarito, gabaritoEscolhido + ".txt");
+            FileReader frGabarito = new FileReader(arquivoGabarito);
+            BufferedReader brGabarito = new BufferedReader(frGabarito);
+            String linhaGabarito = brGabarito.readLine();
+            letraGabarito = linhaGabarito.split("");
+            
+            File arquivoProva = new File(diretorioProva, gabaritoEscolhido + ".txt");
+            FileReader frProva = new FileReader(arquivoProva);
+            BufferedReader brProva = new BufferedReader(frProva);
+            String linhaProva = brProva.readLine();
+            letraProva = linhaProva.split("");
+            
+            while( linhaProva != null ){
+            contadorDeQuestao = 0;
+            for(int i=0; i<letraGabarito.length; i++){
+                if(letraGabarito[i].equals(letraProva[i])){
+                    contadorDeQuestao++;
+                }
+            }
+            linhaProva = brProva.readLine();
+            System.out.println(contadorDeQuestao);
+            }
+            
+            brGabarito.close();
+            brProva.close();
+            frGabarito.close();
+            frProva.close();
+        } catch (FileNotFoundException e){
+            System.out.println("Arquivo não encontrado");
+        } catch (IOException e){
+            System.out.println("Erro na leitura do arquivo");
+        }
         
     }
 }
