@@ -8,6 +8,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.LineNumberReader;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 
 public class Arquivos {
@@ -15,6 +17,7 @@ public class Arquivos {
     private File diretorioGabarito;
     private File diretorio;
     private File diretorioBoletimAlfabetico;
+    private File diretorioBoletimDecrescente;
     
     public Arquivos(){
         this.diretorio = new File("matérias");
@@ -28,6 +31,9 @@ public class Arquivos {
         
         this.diretorioBoletimAlfabetico = new File("matérias\\BoletimAlfabetico");
         diretorioBoletimAlfabetico.mkdir();
+        
+        this.diretorioBoletimDecrescente = new File("matérias\\BoletimDecrescente");
+        diretorioBoletimDecrescente.mkdir();
     }
     
     public void visualizarProvas(){
@@ -190,43 +196,213 @@ public class Arquivos {
     }
     
     public void compararProvaGabarito(String gabaritoEscolhido){
+        ArrayList<String> nomes = new ArrayList<String>();
+        int contadorDeV = 0;
+        int contadorDeF = 0;
+        
         String[] letraGabarito = null;
         String[] letraProva = null;
         int contadorDeQuestao = 0;
-        
+
         try{
             File arquivoGabarito = new File(diretorioGabarito, gabaritoEscolhido + ".txt");
             FileReader frGabarito = new FileReader(arquivoGabarito);
             BufferedReader brGabarito = new BufferedReader(frGabarito);
             String linhaGabarito = brGabarito.readLine();
             letraGabarito = linhaGabarito.split("");
-            
+
             File arquivoProva = new File(diretorioProva, gabaritoEscolhido + ".txt");
             FileReader frProva = new FileReader(arquivoProva);
             BufferedReader brProva = new BufferedReader(frProva);
             String linhaProva = brProva.readLine();
             letraProva = linhaProva.split("");
-            
-            while( linhaProva != null ){
-            contadorDeQuestao = 0;
-            for(int i=0; i<letraGabarito.length; i++){
-                if(letraGabarito[i].equals(letraProva[i])){
-                    contadorDeQuestao++;
+
+            File arquivo = new File(diretorioBoletimAlfabetico, gabaritoEscolhido + ".txt");
+            FileWriter escreverArquivo = new FileWriter(arquivo, true);
+            BufferedWriter bw = new BufferedWriter(escreverArquivo);
+
+            while( linhaProva != null ) {
+                contadorDeQuestao = 0;
+
+                String[] dados = linhaProva.split("  ");
+
+                for(int i = 0; i < letraGabarito.length; i++) {
+                    letraProva = linhaProva.split("");
+                    if(letraGabarito[i].equals(letraProva[i])){
+                        contadorDeQuestao++;
+                    }
+                    if (letraProva[i].equals("v") || letraProva[i].equals("V")) {
+                        contadorDeV++;
+                    } else if (letraProva[i].equals("f") || letraProva[i].equals("F")) {
+                        contadorDeF++;
+                    }
                 }
+
+                if (contadorDeV == 1 || contadorDeF == 10) {
+                    contadorDeQuestao = 0;
+                }
+
+                contadorDeF = 0;
+                contadorDeV = 0;
+                linhaProva = brProva.readLine();
+
+                Integer.toString(contadorDeQuestao);
+
+                nomes.add("Nome do Aluno: " + dados[1] + " / " + "Nota: " + contadorDeQuestao);
             }
-            linhaProva = brProva.readLine();
-            System.out.println(contadorDeQuestao);
+
+            Collections.sort(nomes);
+            for(int i = 0; i < nomes.size(); i++) {
+                bw.write(nomes.get(i));
+                bw.newLine();
             }
-            
+
             brGabarito.close();
             brProva.close();
             frGabarito.close();
             frProva.close();
+            bw.close();
+
         } catch (FileNotFoundException e){
             System.out.println("Arquivo não encontrado");
         } catch (IOException e){
             System.out.println("Erro na leitura do arquivo");
         }
+    }
+    public void compararProvaGabaritoDecrescente(String gabaritoEscolhido){
+        ArrayList<String> notas = new ArrayList<String>();
+        ArrayList<String> notasDez = new ArrayList<String>();
+
+        String[] letraGabarito = null;
+        String[] letraProva = null;
+        int contadorDeQuestao = 0;
+
+        Integer contadorDeV = 0;
+        Integer contadorDeF = 0;
+
+        Double somaDeNotas = 0.0;
+        Double media = 0.0;
+        Double quantidadeDeNotas = 0.0;
+
+        try{
+            File arquivoGabarito = new File(diretorioGabarito, gabaritoEscolhido + ".txt");
+            FileReader frGabarito = new FileReader(arquivoGabarito);
+            BufferedReader brGabarito = new BufferedReader(frGabarito);
+            String linhaGabarito = brGabarito.readLine();
+            letraGabarito = linhaGabarito.split("");
+
+            File arquivoProva = new File(diretorioProva, gabaritoEscolhido + ".txt");
+            FileReader frProva = new FileReader(arquivoProva);
+            BufferedReader brProva = new BufferedReader(frProva);
+            String linhaProva = brProva.readLine();
+            letraProva = linhaProva.split("");
+
+            File arquivo = new File(diretorioBoletimDecrescente, gabaritoEscolhido + ".txt");
+            FileWriter escreverArquivo = new FileWriter(arquivo, true);
+            BufferedWriter bw = new BufferedWriter(escreverArquivo);
+
+            while( linhaProva != null ) {
+                contadorDeQuestao = 0;
+
+                String[] dados = linhaProva.split("  ");
+
+                for (int i = 0; i < letraGabarito.length; i++) {
+                    letraProva = linhaProva.split("");
+                    if (letraGabarito[i].equals(letraProva[i])) {
+                        contadorDeQuestao++;
+                    }
+
+                    if (letraProva[i].equals("v") || letraProva[i].equals("V")) {
+                        contadorDeV++;
+                    } else if (letraProva[i].equals("f") || letraProva[i].equals("F")) {
+                        contadorDeF++;
+                    }
+                }
+
+                if (contadorDeV == 1 || contadorDeF == 10) {
+                    contadorDeQuestao = 0;
+                }
+
+                contadorDeF = 0;
+                contadorDeV = 0;
+
+                linhaProva = brProva.readLine();
+
+                Integer.toString(contadorDeQuestao);
+
+                if(Integer.toString(contadorDeQuestao).equals("10")) {
+                    notasDez.add("Notas: " + contadorDeQuestao + " / " + "Nome do Aluno: " + dados[1]);
+                } else {
+                    notas.add("Notas: " + contadorDeQuestao + " / " + "Nome do Aluno: " + dados[1]);
+                }
+
+                somaDeNotas += contadorDeQuestao;
+                quantidadeDeNotas++;
+            }
+
+            Collections.sort(notas);
+            Collections.reverse(notas);
+
+            for(int i = 0; i < notasDez.size(); i++) {
+                bw.write(notasDez.get(i));
+                bw.newLine();
+            }
+            for(int i = 0; i < notas.size(); i++) {
+                bw.write(notas.get(i));
+                bw.newLine();
+            }
+
+            media = somaDeNotas / quantidadeDeNotas;
+            bw.write("Média da Turma: " + media);
+            bw.newLine();
+
+            brGabarito.close();
+            brProva.close();
+            frGabarito.close();
+            frProva.close();
+            bw.close();
+
+        } catch (FileNotFoundException e){
+            System.out.println("Arquivo não encontrado");
+        } catch (IOException e){
+            System.out.println("Erro na leitura do arquivo");
+        }
+    }
+    
+    public void mostrarBoletimOrdemAlfabetica(String gabaritoEscolhido){
+        try{
+        File arquivoGabarito = new File(diretorioBoletimAlfabetico, gabaritoEscolhido + ".txt");
+        FileReader frGabarito = new FileReader(arquivoGabarito);
+        BufferedReader brGabarito = new BufferedReader(frGabarito);
+        String linha = brGabarito.readLine();
         
+        while(linha != null){
+            System.out.println(linha);
+            linha = brGabarito.readLine();
+        }
+        
+        } catch (FileNotFoundException e){
+            System.out.println("Arquivo não encontrado");
+        } catch (IOException e){
+            System.out.println("Erro na leitura do arquivo");
+        }
+    }
+    public void mostrarBoletimOrdemDecrescente(String gabaritoEscolhido){
+        try{
+        File arquivoGabarito = new File(diretorioBoletimDecrescente, gabaritoEscolhido + ".txt");
+        FileReader frGabarito = new FileReader(arquivoGabarito);
+        BufferedReader brGabarito = new BufferedReader(frGabarito);
+        String linha = brGabarito.readLine();
+        
+        while(linha != null){
+            System.out.println(linha);
+            linha = brGabarito.readLine();
+        }
+        
+        } catch (FileNotFoundException e){
+            System.out.println("Arquivo não encontrado");
+        } catch (IOException e){
+            System.out.println("Erro na leitura do arquivo");
+        }
     }
 }

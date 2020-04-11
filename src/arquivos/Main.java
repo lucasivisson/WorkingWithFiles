@@ -5,8 +5,10 @@ import java.io.*;
 
 public class Main {
     
+    @SuppressWarnings("empty-statement")
     public static void main(String[] args) {
         Scanner escolhaMenu = new Scanner(System.in);
+        Scanner escolhaMenu1 = new Scanner(System.in);
         
         File diretorio = new File("matérias");
         diretorio.mkdir();
@@ -39,7 +41,7 @@ public class Main {
                 a.visualizarProvas();
                 
                 System.out.println("Digite o nome de uma disciplina para gerar o gabarito oficial:");
-                String disciplinaEscolhida = escolhaMenu.next();
+                String disciplinaEscolhida = escolhaMenu1.next();
                 boolean resultadoDaComparacao = a.compararDisciplina(disciplinaEscolhida);
                 
                 if(resultadoDaComparacao == true){
@@ -54,22 +56,40 @@ public class Main {
                 a.visualizarGabaritos();
                 
                 System.out.println("Digite o nome do gabarito para gerar o boletim da disciplina:");
-                String gabaritoEscolhido = escolhaMenu.next();
+                String gabaritoEscolhido = escolhaMenu1.next();
                 boolean resultadoDaComp = a.compararGabarito(gabaritoEscolhido);
                 
                 if(resultadoDaComp == true){
                     a.compararProvaGabarito(gabaritoEscolhido);
+                    System.out.println("Boletim em ordem alfabetica gerado com sucesso!");
+                    a.mostrarBoletimOrdemAlfabetica(gabaritoEscolhido);
+
                 } else {
                     System.out.println("Impossível gerar boletim, gabarito não encontrado!");
                 }           
                 
                 break;
             
-            default:
-                System.out.println("Escolha não existente, tente novamente!");
+            case 4:
+                System.out.println("Listas de todas os gabaritos feitos.");
+                a.visualizarGabaritos();
+
+                System.out.println("Digite o nome do gabarito para gerar o boletim da disciplina:");
+                String gabaritoEscolhidoDecrescente = escolhaMenu1.next();
+                boolean resultadoDaCompDecrescente = a.compararGabarito(gabaritoEscolhidoDecrescente);
+
+                if(resultadoDaCompDecrescente == true) {
+                    a.compararProvaGabaritoDecrescente(gabaritoEscolhidoDecrescente);
+                    System.out.println("Boletim em ordem decrescente gerado com sucesso!");
+                    a.mostrarBoletimOrdemDecrescente(gabaritoEscolhidoDecrescente);
+                } else {
+                    System.out.println("Impossível gerar boletim, gabarito não encontrado!");
+                }
+
+                break;             
             }
-        }while(escolha != 5);
-    } 
+        } while(escolha != 5);
+    }
 }
 
     
