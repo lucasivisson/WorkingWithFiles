@@ -136,6 +136,8 @@ public class Arquivos {
                     }
                     bw.write("  " + nome);
 
+                    i = 0;
+                    
                     System.out.println("Deseja cadastrar as respostas de outro aluno?");
                     System.out.println("1: SIM / 2: NÃO");
                     novoAluno = outroAluno.nextInt();
@@ -195,7 +197,7 @@ public class Arquivos {
         }
     }
     
-    public void compararProvaGabarito(String gabaritoEscolhido){
+    public void compararProvaGabaritoAlfabetico(String gabaritoEscolhido){
         ArrayList<String> nomes = new ArrayList<String>();
         int contadorDeV = 0;
         int contadorDeF = 0;
@@ -205,6 +207,7 @@ public class Arquivos {
         int contadorDeQuestao = 0;
 
         try{
+            
             File arquivoGabarito = new File(diretorioGabarito, gabaritoEscolhido + ".txt");
             FileReader frGabarito = new FileReader(arquivoGabarito);
             BufferedReader brGabarito = new BufferedReader(frGabarito);
@@ -238,7 +241,7 @@ public class Arquivos {
                     }
                 }
 
-                if (contadorDeV == 1 || contadorDeF == 10) {
+                if (contadorDeV == 10 || contadorDeF == 10) {
                     contadorDeQuestao = 0;
                 }
 
@@ -319,7 +322,7 @@ public class Arquivos {
                     }
                 }
 
-                if (contadorDeV == 1 || contadorDeF == 10) {
+                if (contadorDeV == 10 || contadorDeF == 10) {
                     contadorDeQuestao = 0;
                 }
 

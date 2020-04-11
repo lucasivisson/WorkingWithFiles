@@ -60,7 +60,7 @@ public class Main {
                 boolean resultadoDaComp = a.compararGabarito(gabaritoEscolhido);
                 
                 if(resultadoDaComp == true){
-                    a.compararProvaGabarito(gabaritoEscolhido);
+                    a.compararProvaGabaritoAlfabetico(gabaritoEscolhido);
                     System.out.println("Boletim em ordem alfabetica gerado com sucesso!");
                     a.mostrarBoletimOrdemAlfabetica(gabaritoEscolhido);
 
@@ -91,5 +91,3 @@ public class Main {
         } while(escolha != 5);
     }
 }
-
-    
