@@ -125,7 +125,7 @@ public class Arquivos {
                     String nome = alunoIn.nextLine();
 
                     while(i < 10){
-                        System.out.println("Digite os V ou F:");
+                        System.out.println("Digite os v ou f:");
                         String respostas = respostasIn.next();
                         if(respostas.equals("V") || respostas.equals("F") || respostas.equals("v") || respostas.equals("f")){
                             bw.write(respostas);
@@ -174,7 +174,7 @@ public class Arquivos {
         System.out.println("Crie o gabarito oficial da disciplina de " + disciplinaEscolhida );
         int i = 0;
         while(i < 10){
-            System.out.println("Digite os V ou F:");
+            System.out.println("Digite os v ou f:");
             String respostas = teclado.next();
             if(respostas.equals("V") || respostas.equals("F") || respostas.equals("v") || respostas.equals("f")){
                 bw.write(respostas);
